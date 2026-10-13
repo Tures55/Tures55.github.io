@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en" class="no3d">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tures 55 Dock — free Windows 11 taskbar replacement, a macOS-style dock</title>
+<meta name="description" content="Replace the Windows 11 taskbar with a modern, free dock: most-used apps in the middle, widgets, system tray, folders and a complete volume panel. In English and Italian.">
+<link rel="canonical" href="https://tures55.github.io/en/">
+<link rel="alternate" hreflang="it" href="https://tures55.github.io/">
+<link rel="alternate" hreflang="en" href="https://tures55.github.io/en/">
+<link rel="alternate" hreflang="x-default" href="https://tures55.github.io/en/">
+<meta name="theme-color" content="#07080a">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/img/icona-192.png">
+<link rel="apple-touch-icon" href="../assets/img/icona-180.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tures 55 Dock">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Tures 55 Dock — the Windows taskbar, reimagined">
+<meta property="og:description" content="Replace the Windows 11 taskbar with a modern, free dock: most-used apps in the middle, widgets, system tray, folders and a complete volume panel. In English and Italian.">
+<meta property="og:url" content="https://tures55.github.io/en/">
+<meta property="og:image" content="https://tures55.github.io/assets/img/anteprima.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../assets/css/sito.css">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" crossorigin>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Tures 55 Dock",
+  "operatingSystem": "Windows 11",
+  "applicationCategory": "UtilitiesApplication",
+  "softwareVersion": "2.0.4",
+  "description": "Replace the Windows 11 taskbar with a modern, free dock: most-used apps in the middle, widgets, system tray, folders and a complete volume panel. In English and Italian.",
+  "url": "https://tures55.github.io/en/",
+  "downloadUrl": "https://github.com/Tures55/tures55-dock/releases/latest/download/Tures55-Dock-Setup.exe",
+  "image": "https://tures55.github.io/assets/img/anteprima.jpg",
+  "screenshot": "https://tures55.github.io/assets/img/desktop.webp",
+  "inLanguage": ["it", "en"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "author": { "@type": "Person", "name": "Salvo Caruso", "alternateName": "Tures55" }
+}
+</script>
+</head>
+<body>
+<a class="salta" href="#programmi">Skip to content</a>
+
+<canvas id="scena" aria-hidden="true"></canvas>
+<div class="velo" aria-hidden="true"></div>
+<div id="carico" aria-hidden="true"><span class="carico-55">55</span></div>
+
+<header class="testata">
+  <a class="marchio" href="#inizio" data-vai="0">
+    <img src="../assets/img/icona-192.png" alt="" width="30" height="30">
+    <span>Tures 55 Dock</span>
+  </a>
+  <div class="testata-destra">
+    <nav class="lingue" aria-label="Language">
+      <a href="../" hreflang="it" lang="it" >IT</a>
+      <a href="../en/" hreflang="en" lang="en" aria-current="page">EN</a>
+    </nav>
+    <a class="github" href="https://github.com/Tures55/tures55-dock" aria-label="GitHub" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+    </a>
+    <a class="pulsante piccolo testata-scarica" href="https://github.com/Tures55/tures55-dock/releases/latest/download/Tures55-Dock-Setup.exe" data-scarica>Download</a>
+  </div>
+</header>
+
+<main>
+  <section id="inizio" class="tappa eroe" data-tappa="0">
+    <div class="testo">
+      <p class="occhiello">Free · Windows 11 · English & Italian</p>
+      <h1>The Windows taskbar,<br>reimagined.</h1>
+      <p class="sotto">Tures 55 Dock replaces the taskbar with an elegant, easy-to-read dock: apps, widgets, system tray and volume, all one click away.</p>
+      <div class="azioni">
+        <a class="pulsante" href="https://github.com/Tures55/tures55-dock/releases/latest/download/Tures55-Dock-Setup.exe" data-scarica>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+          Download free
+        </a>
+      </div>
+      <p class="meta">Version <span data-versione>2.0.4</span> · <span data-peso>112</span> MB · no admin rights needed</p>
+    </div>
+    <figure class="statica"><img src="../assets/img/barra.webp" alt="The Tures 55 Dock bar with apps and widgets" width="2260" height="110"></figure>
+    <p class="suggerimento"><span class="rotella" aria-hidden="true"></span><span class="per-mouse">Scroll to fly through the features · drag to look around · click an image for a closer look</span><span class="per-tocco">Scroll to fly through the features · tap an image for a closer look</span></p>
+  </section>
+
+  <section id="programmi" class="tappa" data-tappa="1" data-lato="destra">
+    <div class="testo">
+      <p class="occhiello">01 · Apps</p>
+      <h2>What you use most, always in the middle.</h2>
+      <p>Tiles sort themselves by usage: the things you open most drift toward the center. Open apps move to the middle and go back to their place when you close them.</p>
+      <ul class="punti"><li>Click to open, minimize or bring an app to the front</li><li>Middle-click to close it</li><li>Drag a tile to move it, or lock it in place</li><li>Automatic sorting can be turned off</li></ul>
+    </div>
+    <figure class="statica"><img src="../assets/video/demo.jpg" alt="Tures 55 Dock in action on the Windows 11 desktop" width="1560" height="640" loading="lazy"></figure>
+  </section>
+
+  <section id="widget" class="tappa" data-tappa="2" data-lato="sinistra">
+    <div class="testo">
+      <p class="occhiello">02 · Widgets</p>
+      <h2>Everything at a glance.</h2>
+      <p>Clock, calendar, weather, volume, now playing, network, memory, CPU, graphics card, disks, quick notes, timer and more. Every widget is a tile: add or remove it with a right-click.</p>
+    </div>
+    <figure class="statica"><img src="../assets/img/vassoio_widget.webp" alt="Tures 55 Dock system widgets" width="559" height="336" loading="lazy"></figure>
+  </section>
+
+  <section id="vassoio" class="tappa" data-tappa="3" data-lato="destra">
+    <div class="testo">
+      <p class="occhiello">03 · Tray & folders</p>
+      <h2>The system tray, finally comfortable.</h2>
+      <p>The icons next to the clock, system widgets and Windows tools live in a tidy, tabbed window. The folders you open often join the Folders window by themselves.</p>
+    </div>
+    <figure class="statica"><img src="../assets/img/vassoio_strumenti.webp" alt="The Tures 55 Dock tray window" width="559" height="336" loading="lazy"></figure>
+  </section>
+
+  <section id="volume" class="tappa" data-tappa="4" data-lato="sinistra">
+    <div class="testo">
+      <p class="occhiello">04 · Volume</p>
+      <h2>A complete volume panel.</h2>
+      <p>Speakers and microphone, per-app volume in the mixer and audio driver selection, ASIO included. All one click from the dock.</p>
+    </div>
+    <figure class="statica"><img src="../assets/img/volume_mixer.webp" alt="The Tures 55 Dock volume mixer" width="505" height="565" loading="lazy"></figure>
+  </section>
+
+  <section id="pannello" class="tappa" data-tappa="5" data-lato="destra">
+    <div class="testo">
+      <p class="occhiello">05 · Control Panel</p>
+      <h2>Yours, down to the details.</h2>
+      <p>Colors, transparency, tile size, spacing, animations and taskbar behavior. Every change shows up on the dock instantly, and with “Save copy” you can take your whole dock to another PC.</p>
+    </div>
+    <figure class="statica"><img src="../assets/img/pannello_aspetto.webp" alt="The Tures 55 Dock Control Panel" width="710" height="755" loading="lazy"></figure>
+  </section>
+
+  <section id="scarica" class="tappa" data-tappa="6" data-lato="destra">
+    <div class="testo">
+      <p class="occhiello">06 · Download</p>
+      <h2>Ready in a minute.</h2>
+      <ol class="passi"><li><strong>Download</strong> the file <code>Tures55-Dock-Setup.exe</code>.</li><li><strong>Open it.</strong> If Windows shows “Windows protected your PC”, click “More info” and then “Run anyway”. This happens with programs that have no paid digital signature, like this one.</li><li><strong>Done.</strong> It installs without admin rights and keeps itself up to date.</li></ol>
+      <div class="azioni">
+        <a class="pulsante" href="https://github.com/Tures55/tures55-dock/releases/latest/download/Tures55-Dock-Setup.exe" data-scarica>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+          Download free
+        </a>
+        <a class="collegamento" href="https://github.com/Tures55/tures55-dock/releases" rel="noopener">All versions on GitHub →</a>
+      </div>
+      <p class="meta">Version <span data-versione>2.0.4</span> · <span data-peso>112</span> MB · no admin rights needed</p>
+      <p class="alternativa">A free alternative to RocketDock, ObjectDock and Winstep Nexus, built for Windows 11.</p>
+    </div>
+  </section>
+
+  <section id="domande" class="blocco">
+    <div class="colonna">
+      <h2>Frequently asked questions</h2>
+      <div class="faq"><details><summary>Is it really free?</summary><p>Yes, for personal use. No ads and no extra programs bundled in the installer.</p></details><details><summary>What happens to the Windows taskbar?</summary><p>Tures 55 hides it. To see it, just rest the mouse on the bottom edge of the screen; when you close Tures 55 it goes back to its place.</p></details><details><summary>How does it update?</summary><p>By itself: updates download automatically and install when you close the dock.</p></details><details><summary>How do I uninstall it?</summary><p>Like any program: Windows Settings → Apps → Installed apps → Tures 55 Dock → Uninstall.</p></details><details><summary>Can I share it?</summary><p>Yes: you may share the original installer, free of charge and unmodified, linking to this page.</p></details><details><summary>I found a problem: what do I do?</summary><p>The dock has “Report a problem”: it sends the author your description and the dock's log, no account needed.</p></details></div>
+    </div>
+    <div class="colonna sostieni">
+      <h2>Enjoying it? Buy me a coffee.</h2>
+      <p>Tures 55 Dock is free and will stay free. If you find it useful, you can support its development.</p>
+      <a class="pulsante secondario" href="https://buymeacoffee.com/tures1955" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13v5a6 6 0 0 1-6 6h-1a6 6 0 0 1-6-6zM17 10h1.5a2.5 2.5 0 0 1 0 5H17M8 2.5v2.5M12 2.5v2.5"/></svg>
+        Support on Buy Me a Coffee
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="piede">
+  <span>© 2026 Salvo Caruso (Tures55)</span>
+  <span>Free for personal use</span>
+  <a href="https://github.com/Tures55/tures55-dock" rel="noopener">GitHub page</a>
+</footer>
+
+<nav class="dock-nav" aria-label="Site sections">
+  <a href="#inizio" data-vai="0" data-nome="Home"><span class="t55">55</span></a>
+  <span class="dock-stacco" aria-hidden="true"></span>
+  <a href="#programmi" data-vai="1" data-nome="Apps"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg><span class="sr">Apps</span></a>
+  <a href="#widget" data-vai="2" data-nome="Widgets"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0zM12 7v5l3 2"/></svg><span class="sr">Widgets</span></a>
+  <a href="#vassoio" data-vai="3" data-nome="Tray"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h5l2 3h4l2-3h5M3 13l3-8h12l3 8v6H3z"/></svg><span class="sr">Tray</span></a>
+  <a href="#volume" data-vai="4" data-nome="Volume"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/></svg><span class="sr">Volume</span></a>
+  <a href="#pannello" data-vai="5" data-nome="Panel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9M15 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM9 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg><span class="sr">Panel</span></a>
+  <span class="dock-stacco" aria-hidden="true"></span>
+  <a href="#scarica" data-vai="6" data-nome="Download" class="nav-scarica"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span class="sr">Download</span></a>
+</nav>
+
+<div id="etichetta" class="etichetta" hidden></div>
+<div id="fuoco" class="fuoco" hidden>
+  <button type="button" class="fuoco-chiudi" aria-label="Close">×</button>
+  <p class="fuoco-aiuto">Click or Esc to go back</p>
+</div>
+
+<script id="testi-js" type="application/json">{"chiudi":"Close","fuoco_aiuto":"Click or Esc to go back","attesa":"Loading","mattonelle":{"start":"Start","cartelle":"Folders","vassoio":"System tray","browser":"Browser","posta":"Mail","musica":"Music","foto":"Photos","codice":"Code","terminale":"Terminal","chat":"Chat","orologio":"Clock and date","calendario":"Calendar","meteo":"Weather","volume":"Volume","cpu":"CPU","ram":"RAM","timer":"Timer","note":"Quick notes","pannello":"Control Panel"},"giorni":["SUN","MON","TUE","WED","THU","FRI","SAT"],"mesi":["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"]}</script>
+<script type="module" src="../assets/js/sito.js"></script>
+</body>
+</html>

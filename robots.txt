@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tures55.github.io/sitemap.xml
