@@ -217,3 +217,26 @@ main { position: relative; z-index: 2; }
 /* ---------- Salti dalla dock in basso: le tappe intermedie sfumano ---------- */
 .sipario { position: fixed; inset: 0; z-index: 1; pointer-events: none; background: var(--fondo); opacity: 0; }
 .in-salto .tappa:not(.meta-salto) .testo { opacity: 0 !important; transition: opacity .2s ease; }
+
+/* ---------- Sostegno (Buy Me a Coffee): stesso rosa del pulsante «♥ Sostieni» del Dock ---------- */
+:root { --cuore: #ff7a93; }
+.sostieni-testata { display: inline-flex; align-items: center; gap: 7px; padding: 6px 13px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 600;
+  color: var(--cuore); box-shadow: 0 0 0 1px rgba(255,122,147,.55) inset; transition: background .2s, box-shadow .2s; }
+.sostieni-testata:hover { background: rgba(255,122,147,.12); box-shadow: 0 0 0 1px var(--cuore) inset; }
+.sostieni-testata svg, .invito-sostieni svg { width: 16px; height: 16px; fill: currentColor; flex: none; }
+.invito-sostieni { display: inline-flex; align-items: center; gap: 10px; margin-top: 22px; padding: 10px 16px; border-radius: 12px; text-decoration: none; font-size: 15px;
+  color: var(--tenue); background: rgba(255,122,147,.07); box-shadow: 0 0 0 1px rgba(255,122,147,.28) inset; transition: background .2s, color .2s; }
+.invito-sostieni svg { color: var(--cuore); }
+.invito-sostieni strong { color: var(--cuore); font-weight: 650; }
+.invito-sostieni:hover { background: rgba(255,122,147,.14); color: var(--testo); }
+.dock-nav .nav-cuore { color: var(--cuore); }
+.dock-nav .nav-cuore svg { fill: currentColor; stroke: none; width: 50%; height: 50%; }
+.piede .piede-cuore { color: var(--cuore); }
+.sostieni { box-shadow: 0 0 0 1px rgba(255,122,147,.22) inset; }
+.sostieni .pulsante.secondario { color: var(--cuore); box-shadow: 0 0 0 1px rgba(255,122,147,.55) inset; }
+.sostieni .pulsante.secondario:hover { background: rgba(255,122,147,.12); box-shadow: 0 0 0 1px var(--cuore) inset; }
+@media (max-width: 860px), (max-aspect-ratio: 1/1) {
+  .sostieni-testata { padding: 7px; }
+  .sostieni-testata span { display: none; }
+  .sostieni-testata svg { width: 18px; height: 18px; }
+}
