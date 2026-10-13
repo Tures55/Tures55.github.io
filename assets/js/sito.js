@@ -72,6 +72,16 @@ document.querySelectorAll('[data-vai]').forEach((a) => {
   });
 });
 
+// Rimandi alle sezioni dopo l'ultima tappa (sostenitori): scorrimento morbido, la scena resta ferma sul 55
+document.querySelectorAll('a[href^="#"]:not([data-vai])').forEach((a) => {
+  const meta = document.querySelector(a.getAttribute('href'));
+  if (!meta || meta.hasAttribute('data-tappa')) return;
+  a.addEventListener('click', (e) => {
+    e.preventDefault();
+    meta.scrollIntoView({ behavior: movimentoRidotto ? 'auto' : 'smooth' });
+  });
+});
+
 // ---------- Dock di navigazione: ingrandimento come su macOS ----------
 const nav = document.querySelector('.dock-nav');
 nav.addEventListener('pointermove', (e) => {

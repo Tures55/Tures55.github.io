@@ -28,7 +28,7 @@
   // decide subito se mostrare il 3D, prima che la pagina appaia: niente lampo della versione semplice all'apertura
   (function () { try { if (!matchMedia('(prefers-reduced-motion: reduce)').matches && document.createElement('canvas').getContext('webgl2')) document.documentElement.className = 'js3d'; } catch (e) {} })();
 </script>
-<link rel="stylesheet" href="../assets/css/sito.css?v=mv784os9">
+<link rel="stylesheet" href="../assets/css/sito.css?v=mv78bhr2">
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" crossorigin>
 <script type="importmap">
 { "imports": {
@@ -163,24 +163,37 @@
           Support
         </a>
         <a class="collegamento" href="https://github.com/Tures55/tures55-dock/releases" rel="noopener">All versions on GitHub →</a>
+        <a class="collegamento rosa" href="#sostenitori">♥ What supporters get ↓</a>
       </div>
       <p class="meta">Version <span data-versione>2.0.4</span> · <span data-peso>112</span> MB · no admin rights needed</p>
       <p class="alternativa">A free alternative to RocketDock, ObjectDock and Winstep Nexus, built for Windows 11.</p>
     </div>
   </section>
 
-  <section id="domande" class="blocco">
+  <section id="sostenitori" class="blocco sostenitori">
     <div class="colonna">
-      <h2>Frequently asked questions</h2>
-      <div class="faq"><details><summary>Is it really free?</summary><p>Yes, for personal use. No ads and no extra programs bundled in the installer.</p></details><details><summary>What happens to the Windows taskbar?</summary><p>Tures 55 hides it. To see it, just rest the mouse on the bottom edge of the screen; when you close Tures 55 it goes back to its place.</p></details><details><summary>How does it update?</summary><p>By itself: updates download automatically and install when you close the dock.</p></details><details><summary>How do I uninstall it?</summary><p>Like any program: Windows Settings → Apps → Installed apps → Tures 55 Dock → Uninstall.</p></details><details><summary>Can I share it?</summary><p>Yes: you may share the original installer, free of charge and unmodified, linking to this page.</p></details><details><summary>I found a problem: what do I do?</summary><p>The dock has “Report a problem”: it sends the author your description and the dock's log, no account needed.</p></details></div>
-    </div>
-    <div class="colonna sostieni" id="sostieni">
-      <h2>Enjoying it? Buy me a coffee.</h2>
-      <p>Tures 55 Dock is free and will stay free. If you find it useful, you can support its development.</p>
-      <a class="pulsante secondario" href="https://buymeacoffee.com/tures1955" rel="noopener" target="_blank">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13v5a6 6 0 0 1-6 6h-1a6 6 0 0 1-6-6zM17 10h1.5a2.5 2.5 0 0 1 0 5H17M8 2.5v2.5M12 2.5v2.5"/></svg>
+      <p class="occhiello">Supporters</p>
+      <h2>Free for everyone.<br>Source code for supporters.</h2>
+      <p>Tures 55 Dock is free, with no limits and no locked features, and it will stay that way. If you find it useful, a donation is the nicest way to say thanks and help it grow. As a thank-you you get:</p>
+      <a class="pulsante cuore" href="https://buymeacoffee.com/tures1955" rel="noopener" target="_blank">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 8 3.4 4.5 6.9 4.5c2.1 0 3.6 1.2 5.1 3 1.5-1.8 3-3 5.1-3 3.5 0 5.5 3.5 4.2 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg>
         Support on Buy Me a Coffee
       </a>
+    </div>
+    <div class="colonna">
+      <ul class="vantaggi">
+        <li><span class="tessera-icona" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg></span><p><strong>The complete source code</strong> of the program, to study and freely modify for personal use.</p></li>
+        <li><span class="tessera-icona" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg></span><p><strong>Your name among the supporters</strong> of the project. You can stay anonymous if you prefer.</p></li>
+        <li><span class="tessera-icona" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14.5 9.5a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM13.4 12.4L21 20M18 17l2-2M15.5 14.5l2-2"/></svg></span><p><strong>A personal supporter code</strong>, sent to you by email: paste it into the dock and the donation reminder shown when Windows starts goes away.</p></li>
+      </ul>
+      <p class="nota-sostenitori">The supporters' code is for personal use: it may not be distributed, original or modified. To spread the word about Tures 55 Dock, share this page or the original installer, free of charge and unmodified.</p>
+    </div>
+  </section>
+
+  <section id="domande" class="blocco domande">
+    <div class="colonna">
+      <h2>Frequently asked questions</h2>
+      <div class="faq"><details><summary>Is it really free?</summary><p>Yes, for personal use. No ads and no extra programs bundled in the installer.</p></details><details><summary>Do I have to donate to use it?</summary><p>No: it is complete and free, with no locked features. When Windows starts, a small donation reminder shows up and closes with “Later”; supporters turn it off with their code.</p></details><details><summary>Is the source code available?</summary><p>The program is free for everyone. The complete source code is the thank-you for those who support it with a donation: they can study and modify it for personal use, but not distribute it.</p></details><details><summary>What happens to the Windows taskbar?</summary><p>Tures 55 hides it. To see it, just rest the mouse on the bottom edge of the screen; when you close Tures 55 it goes back to its place.</p></details><details><summary>How does it update?</summary><p>By itself: updates download automatically and install when you close the dock.</p></details><details><summary>How do I uninstall it?</summary><p>Like any program: Windows Settings → Apps → Installed apps → Tures 55 Dock → Uninstall.</p></details><details><summary>Can I share it?</summary><p>Yes: you may share the original installer, free of charge and unmodified, linking to this page.</p></details><details><summary>I found a problem: what do I do?</summary><p>The dock has “Report a problem”: it sends the author your description and the dock's log, no account needed.</p></details></div>
     </div>
   </section>
 </main>
@@ -212,6 +225,6 @@
 </div>
 
 <script id="testi-js" type="application/json">{"chiudi":"Close","fuoco_aiuto":"Click or Esc to go back","attesa":"Loading","mattonelle":{"start":"Start","cartelle":"Folders","vassoio":"System tray","browser":"Browser","posta":"Mail","musica":"Music","foto":"Photos","codice":"Code","terminale":"Terminal","chat":"Chat","orologio":"Clock and date","calendario":"Calendar","meteo":"Weather","volume":"Volume","cpu":"CPU","ram":"RAM","timer":"Timer","note":"Quick notes","pannello":"Control Panel"},"giorni":["SUN","MON","TUE","WED","THU","FRI","SAT"],"mesi":["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"]}</script>
-<script type="module" src="../assets/js/sito.js?v=mv784os9"></script>
+<script type="module" src="../assets/js/sito.js?v=mv78bhr2"></script>
 </body>
 </html>

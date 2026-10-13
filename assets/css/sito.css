@@ -247,3 +247,27 @@ main { position: relative; z-index: 2; }
   .azioni { column-gap: 10px; }
   .azioni .pulsante { padding: 13px 17px; font-size: 16px; }
 }
+
+/* ---------- Sezione sostenitori ---------- */
+.sostenitori { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: start; padding-bottom: 60px; }
+.sostenitori h2 { font-size: clamp(30px, 3.4vw, 46px); }
+.sostenitori .colonna > p { color: var(--tenue); font-size: 18px; margin-bottom: 26px; }
+.vantaggi { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.vantaggi li { display: flex; gap: 16px; align-items: flex-start; padding: 18px 20px; border-radius: var(--raggio);
+  background: linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.015)); box-shadow: 0 0 0 1px var(--linea) inset; }
+.vantaggi p { margin: 0; color: var(--tenue); }
+.vantaggi strong { color: var(--testo); }
+.tessera-icona { flex: none; width: 42px; height: 42px; display: grid; place-items: center; border-radius: 10px; color: var(--cuore);
+  background: linear-gradient(135deg, var(--tessera-chiaro), var(--tessera-scuro)); box-shadow: 0 0 0 1px rgba(255,255,255,.1) inset; }
+.tessera-icona svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.nota-sostenitori { margin: 18px 4px 0; font-size: 14px; color: var(--fioco); }
+.domande { grid-template-columns: minmax(0, 1fr); padding-top: 40px; background: var(--fondo); }
+.domande .colonna { width: 100%; max-width: 54rem; margin: 0 auto; }
+.collegamento.rosa { color: var(--cuore); }
+.collegamento.rosa:hover { color: #ffa3b4; }
+@media (max-width: 860px), (max-aspect-ratio: 1/1) {
+  .sostenitori { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+}
+.sostenitori { background: linear-gradient(to bottom, rgba(7,8,10,.55), rgba(7,8,10,.96) 140px); }
+.sostenitori .colonna > p.occhiello { color: var(--cuore); font-size: 13px; margin-bottom: 18px; }
+.sostenitori .colonna > p.nota-sostenitori { font-size: 14px; color: var(--fioco); margin: 18px 4px 0; }
