@@ -240,3 +240,10 @@ main { position: relative; z-index: 2; }
   .sostieni-testata span { display: none; }
   .sostieni-testata svg { width: 18px; height: 18px; }
 }
+.pulsante.cuore { color: var(--cuore); background: transparent; box-shadow: 0 0 0 1px rgba(255,122,147,.6) inset; }
+.pulsante.cuore:hover { background: rgba(255,122,147,.12); box-shadow: 0 0 0 1px var(--cuore) inset, 0 12px 40px -12px rgba(255,122,147,.45); }
+.pulsante.cuore svg { fill: currentColor; stroke: none; width: 18px; height: 18px; }
+@media (max-width: 480px) {
+  .azioni { column-gap: 10px; }
+  .azioni .pulsante { padding: 13px 17px; font-size: 16px; }
+}
