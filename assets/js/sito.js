@@ -27,8 +27,19 @@ function progresso() {
 }
 
 // ---------- Scorrimento morbido verso una tappa ----------
-let animazione = null;
-function ferma() { if (animazione) cancelAnimationFrame(animazione); animazione = null; }
+// Durante un salto la scena vola dritta alla meta, senza passare da tutte le tappe in mezzo
+let animazione = null, salto = null;
+const facile = (k) => (k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
+function ferma() {
+  if (animazione) cancelAnimationFrame(animazione);
+  animazione = null;
+  salto = null;
+  radice.classList.remove('in-salto');
+}
+function statoSalto() {
+  if (!salto) return null;
+  return { ...salto, e: facile(Math.min(1, (performance.now() - salto.t0) / salto.durata)) };
+}
 function vaiA(i) {
   ferma();
   const meta = centri[i] ?? 0;
@@ -37,13 +48,17 @@ function vaiA(i) {
     return;
   }
   const da = scrollY;
-  const durata = Math.min(2400, 800 + Math.abs(meta - da) * 0.3);
+  const fDa = progresso();
+  const durata = 950 + Math.min(3, Math.abs(i - fDa)) * 200;
   const t0 = performance.now();
+  salto = { da: fDa, a: i, t0, durata };
+  radice.classList.add('in-salto');
+  tappe.forEach((s) => s.classList.toggle('meta-salto', Number(s.dataset.tappa) === i));
   const passo = (t) => {
     const k = Math.min(1, (t - t0) / durata);
-    const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
-    scrollTo(0, da + (meta - da) * e);
-    animazione = k < 1 ? requestAnimationFrame(passo) : null;
+    scrollTo(0, da + (meta - da) * facile(k));
+    if (k < 1) animazione = requestAnimationFrame(passo);
+    else { animazione = null; salto = null; radice.classList.remove('in-salto'); }
   };
   animazione = requestAnimationFrame(passo);
 }
@@ -114,6 +129,7 @@ aggiorna();
 // ---------- Scena 3D (se il computer la regge) ----------
 function puo3D() {
   if (movimentoRidotto) return false;
+  if (radice.classList.contains('js3d')) return true; // già deciso nella testata della pagina
   try { return !!document.createElement('canvas').getContext('webgl2'); } catch { return false; }
 }
 function senza3D() {
@@ -124,18 +140,20 @@ function senza3D() {
 }
 
 if (puo3D()) {
-  radice.classList.replace('no3d', 'js3d');
+  radice.classList.remove('no3d');
+  radice.classList.add('js3d');
   misura();
   aggiorna();
   const scorta = setTimeout(() => radice.classList.add('pronta'), 9000);
   try {
-    const { avviaScena } = await import('./scena.js');
+    const { avviaScena } = await import(new URL('./scena.js' + new URL(import.meta.url).search, import.meta.url).href);
     await avviaScena({
       canvas: document.getElementById('scena'),
       base,
       testi,
       progresso,
       vaiA,
+      salto: statoSalto,
       lati: tappe.map((s) => s.dataset.lato || 'centro'),
       etichetta: document.getElementById('etichetta'),
       fuoco: document.getElementById('fuoco'),

@@ -23,11 +23,11 @@ const DIM = {
 // Le tappe del volo: posizione, rotazione verso chi arriva, ingombro del contenuto (larghezza, altezza, profondità)
 const TAPPE = [
   { pos: [0, 0, 0], ang: 0, box: [21.5, 1.9, 0.4], centro: [0, 0.3, 0] },
-  { pos: [-16, 1.6, -28], ang: 0.42, box: [8.4, 3.6, 0.8] },
-  { pos: [16, 1.6, -56], ang: -0.42, box: [10.6, 6.3, 1.4] },
-  { pos: [-15, 1.0, -84], ang: 0.4, box: [8.8, 5.0, 1] },
-  { pos: [14, 1.4, -112], ang: -0.4, box: [11.6, 3.4, 1.2] },
-  { pos: [-13, 1.2, -140], ang: 0.38, box: [8.8, 4.4, 0.8] },
+  { pos: [-13, 1.6, -30], ang: 0.3, box: [8.4, 3.6, 0.8] },
+  { pos: [9, 1.6, -58], ang: -0.26, box: [10.6, 6.3, 1.4] },
+  { pos: [-9, 1.0, -86], ang: 0.26, box: [8.8, 5.0, 1] },
+  { pos: [9, 1.4, -114], ang: -0.26, box: [11.6, 3.4, 1.2] },
+  { pos: [-8, 1.2, -142], ang: 0.24, box: [8.8, 4.4, 0.8] },
   { pos: [0, 1.8, -170], ang: 0, box: [8.8, 6, 1.2] },
 ];
 
@@ -208,7 +208,7 @@ function texRadiale(colore, forza = 1) {
   return t;
 }
 
-export async function avviaScena({ canvas, base, testi, progresso, vaiA, lati, etichetta, fuoco, pronta }) {
+export async function avviaScena({ canvas, base, testi, progresso, vaiA, salto, lati, etichetta, fuoco, pronta }) {
   const radice = document.documentElement;
   const tattile = matchMedia('(pointer: coarse)').matches;
   const stretto = matchMedia('(max-width: 860px), (max-aspect-ratio: 1/1)');
@@ -224,18 +224,44 @@ export async function avviaScena({ canvas, base, testi, progresso, vaiA, lati, e
   const pmrem = new THREE.PMREMGenerator(renderer);
   scena.environment = pmrem.fromScene(new RoomEnvironment(renderer), 0.04).texture;
 
-  const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 320);
+  const camera = new THREE.PerspectiveCamera(40, 1, 0.5, 320);
   TAPPE.forEach((t, i) => {
     t.lato = lati[i] || 'centro';
     t.vCentro = new THREE.Vector3(...(t.centro || t.pos));
   });
 
   // ---------- Pavimento, luci soffuse e polvere ----------
-  const griglia = new THREE.GridHelper(700, 350, 0x1d232a, 0x13171c);
+  // griglia del pavimento disegnata da uno shader: niente sfarfallio quando la telecamera si muove,
+  // le linee svaniscono da sole quando da lontano diventerebbero più fitte di un pixel
+  const matGriglia = new THREE.ShaderMaterial({
+    transparent: true,
+    depthWrite: false,
+    uniforms: { occhio: { value: new THREE.Vector3() }, vicino: { value: 20 }, lontano: { value: 50 } },
+    vertexShader: `
+      varying vec3 vMondo;
+      void main() {
+        vec4 m = modelMatrix * vec4(position, 1.0);
+        vMondo = m.xyz;
+        gl_Position = projectionMatrix * viewMatrix * m;
+      }`,
+    fragmentShader: `
+      uniform vec3 occhio;
+      uniform float vicino, lontano;
+      varying vec3 vMondo;
+      void main() {
+        vec2 c = vMondo.xz / 2.0;
+        vec2 fw = fwidth(c);
+        vec2 g = abs(fract(c - 0.5) - 0.5) / max(fw, 1e-4);
+        float linea = 1.0 - min(min(g.x, g.y), 1.0);
+        float fitta = 1.0 - smoothstep(0.12, 0.45, max(fw.x, fw.y));
+        float nebbia = 1.0 - smoothstep(vicino, lontano, distance(vMondo, occhio));
+        gl_FragColor = vec4(0.13, 0.16, 0.19, linea * fitta * nebbia * 0.9);
+      }`,
+  });
+  const griglia = new THREE.Mesh(new THREE.PlaneGeometry(700, 700), matGriglia);
+  griglia.rotation.x = -Math.PI / 2;
   griglia.position.set(0, PAVIMENTO, -90);
-  griglia.material.transparent = true;
-  griglia.material.opacity = 0.6;
-  griglia.material.depthWrite = false;
+  griglia.renderOrder = -1;
   scena.add(griglia);
 
   const alone = texRadiale('rgba(32,200,207,A)', 1);
@@ -261,7 +287,7 @@ export async function avviaScena({ canvas, base, testi, progresso, vaiA, lati, e
   const geoPolvere = new THREE.BufferGeometry();
   geoPolvere.setAttribute('position', new THREE.BufferAttribute(posizioni, 3));
   const polvere = new THREE.Points(geoPolvere, new THREE.PointsMaterial({
-    size: 0.08, map: punto, color: 0xbff4f7, transparent: true, opacity: 0.5, depthWrite: false, blending: THREE.AdditiveBlending,
+    size: 0.08, map: punto, color: 0xbff4f7, transparent: true, opacity: 0.32, depthWrite: false, blending: THREE.AdditiveBlending,
   }));
   scena.add(polvere);
 
@@ -289,8 +315,8 @@ export async function avviaScena({ canvas, base, testi, progresso, vaiA, lati, e
   function creaMattonella(id, dati) {
     const g = new THREE.Group();
     const corpo = new THREE.Mesh(geoCorpo, matCorpo);
-    const faccia = new THREE.Mesh(geoFaccia, new THREE.MeshBasicMaterial({ map: texMattonella(id), transparent: true, toneMapped: false }));
-    faccia.position.z = 0.152;
+    const faccia = new THREE.Mesh(geoFaccia, new THREE.MeshBasicMaterial({ map: texMattonella(id), transparent: true, toneMapped: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 }));
+    faccia.position.z = 0.158;
     corpo.userData = faccia.userData = dati;
     g.add(corpo, faccia);
     return g;
@@ -409,11 +435,11 @@ export async function avviaScena({ canvas, base, testi, progresso, vaiA, lati, e
   texLogo.colorSpace = THREE.SRGBColorSpace;
   texLogo.anisotropy = aniso;
   const corpoLogo = new THREE.Mesh(new RoundedBoxGeometry(3.4, 3.4, 0.6, 6, 0.3), matCorpo);
-  const facciaLogo = new THREE.Mesh(new THREE.PlaneGeometry(3.12, 3.12), new THREE.MeshBasicMaterial({ map: texLogo, transparent: true, toneMapped: false }));
-  facciaLogo.position.z = 0.302;
+  const facciaLogo = new THREE.Mesh(new THREE.PlaneGeometry(3.12, 3.12), new THREE.MeshBasicMaterial({ map: texLogo, transparent: true, toneMapped: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -4 }));
+  facciaLogo.position.z = 0.312;
   const retroLogo = facciaLogo.clone();
   retroLogo.rotation.y = Math.PI;
-  retroLogo.position.z = -0.302;
+  retroLogo.position.z = -0.312;
   corpoLogo.userData = facciaLogo.userData = retroLogo.userData = { logo: true };
   logo.add(corpoLogo, facciaLogo, retroLogo);
   cliccabili.push(corpoLogo, facciaLogo, retroLogo);
@@ -459,19 +485,45 @@ export async function avviaScena({ canvas, base, testi, progresso, vaiA, lati, e
     out.ox = ox; out.oy = oy;
   }
 
-  function statoDaProgresso(f) {
+  function statoDaProgresso(f, out = fuori) {
     const n = TAPPE.length - 1;
     f = Math.min(Math.max(f, 0), n);
     const i = Math.min(Math.floor(f), n - 1), t = f - i;
     const e = morbido(clamp01((t - 0.1) / 0.8));
     inquadra(i, A); inquadra(i + 1, B);
-    fuori.pos.lerpVectors(A.pos, B.pos, e);
-    fuori.pos.y += Math.sin(Math.PI * e) * (1.5 + A.pos.distanceTo(B.pos) * 0.04);
-    fuori.target.lerpVectors(A.target, B.target, morbido(clamp01((t - 0.06) / 0.8)));
-    fuori.ox = lerp(A.ox, B.ox, e);
-    fuori.oy = lerp(A.oy, B.oy, e);
-    fuori.roll = Math.sin(Math.PI * e) * 0.07 * Math.sign(B.pos.x - A.pos.x);
+    out.pos.lerpVectors(A.pos, B.pos, e);
+    out.pos.y += Math.sin(Math.PI * e) * (0.8 + A.pos.distanceTo(B.pos) * 0.02);
+    out.target.lerpVectors(A.target, B.target, morbido(clamp01((t - 0.06) / 0.8)));
+    out.ox = lerp(A.ox, B.ox, e);
+    out.oy = lerp(A.oy, B.oy, e);
+    out.roll = Math.sin(Math.PI * e) * 0.025 * Math.sign(B.pos.x - A.pos.x);
   }
+
+  // Salto dalla dock in basso: un solo volo dritto e calmo fino alla meta, alzandosi un po'
+  // per passare sopra le tappe intermedie (che sfumano) invece di zigzagare da una all'altra.
+  const partenza = { pos: new THREE.Vector3(), target: new THREE.Vector3(), ox: 0, oy: 0, roll: 0 };
+  let saltoNoto = null;
+  function statoDaSalto(s) {
+    if (saltoNoto !== s.t0) { saltoNoto = s.t0; partenza.pos.copy(liscio.pos); partenza.target.copy(liscio.target); partenza.ox = liscio.ox; partenza.oy = liscio.oy; }
+    inquadra(s.a, B);
+    const e = s.e, u = 1 - e;
+    // curva che prima sale, poi plana in alto e infine scende sulla meta: non attraversa mai le immagini
+    const alto = Math.min(10, 2 + partenza.pos.distanceTo(B.pos) * 0.06);
+    fuori.pos.copy(partenza.pos).multiplyScalar(u * u * u)
+      .addScaledVector(partenza.pos, 3 * u * u * e)
+      .addScaledVector(B.pos, 3 * u * e * e)
+      .addScaledVector(B.pos, e * e * e);
+    fuori.pos.y += alto * 3 * u * e;
+    fuori.target.lerpVectors(partenza.target, B.target, morbido(clamp01(e * 1.15)));
+    fuori.ox = lerp(partenza.ox, B.ox, e);
+    fuori.oy = lerp(partenza.oy, B.oy, e);
+    fuori.roll = 0;
+    return Math.abs(s.a - s.da) > 1.2 ? Math.pow(Math.sin(Math.PI * e), 1.5) * 0.5 : 0;
+  }
+  const liscio = { pos: new THREE.Vector3(), target: new THREE.Vector3(), ox: 0, oy: 0, roll: 0 };
+  const sipario = document.createElement('div');
+  sipario.className = 'sipario';
+  canvas.after(sipario);
 
   // ---------- Mouse, tocco e modalità «da vicino» ----------
   const raggio = new THREE.Raycaster();
@@ -609,7 +661,7 @@ export async function avviaScena({ canvas, base, testi, progresso, vaiA, lati, e
   const vec = new THREE.Vector3();
   const destra = new THREE.Vector3();
   let progressoAttuale = 0;
-  let dockX = null, fermo = 0, ondaT = 0;
+  let dockX = null, fermo = 0, ondaT = 0, spost = -larghezzaDock / 2;
   let ultimoMinuto = -1, ultimoCarico = 0;
   let primo = true;
 
@@ -628,9 +680,9 @@ export async function avviaScena({ canvas, base, testi, progresso, vaiA, lati, e
     if (px === null) {
       // nessuno la tocca: ogni tanto passa un'onda da sola, per far capire che è viva
       fermo += dt;
-      if (fermo > 2.5) {
-        ondaT = (ondaT + dt) % 8;
-        if (ondaT < 3.4) { px = lerp(-larghezzaDock / 2 - 2, larghezzaDock / 2 + 2, ondaT / 3.4); forza = 0.5; }
+      if (fermo > 4) {
+        ondaT = (ondaT + dt) % 14;
+        if (ondaT < 5) { px = lerp(-larghezzaDock / 2 - 2, larghezzaDock / 2 + 2, morbido(ondaT / 5)); forza = 0.32; }
       }
     } else { fermo = 0; ondaT = 0; }
 
@@ -643,11 +695,25 @@ export async function avviaScena({ canvas, base, testi, progresso, vaiA, lati, e
     let c = 0;
     tessere.forEach((t, i) => {
       if (i > 0) c += PASSO + (t.m.sez !== tessere[i - 1].m.sez ? STACCO : 0);
+      t.inizio = c;
       t.x = c + t.s / 2;
       c += t.s;
     });
+    // il punto sotto il mouse resta fermo: le mattonelle si allargano ai due lati invece di scivolare
+    let obiettivoSpost = -c / 2;
+    if (px !== null) {
+      let m = null;
+      for (let i = 0; i < tessere.length && m === null; i++) {
+        const t = tessere[i], a = t.x0 - 0.5;
+        if (px < a) m = i === 0 ? t.inizio - (a - px) : tessere[i - 1].inizio + tessere[i - 1].s + (px - (tessere[i - 1].x0 + 0.5));
+        else if (px <= a + 1) m = t.inizio + (px - a) * t.s;
+      }
+      if (m === null) { const u = tessere[tessere.length - 1]; m = u.inizio + u.s + (px - (u.x0 + 0.5)); }
+      obiettivoSpost = px - m;
+    }
+    spost += (obiettivoSpost - spost) * k;
     for (const t of tessere) {
-      t.g.position.set(t.x - c / 2, (t.s - 1) * 0.5, (t.s - 1) * 0.25);
+      t.g.position.set(t.x + spost, (t.s - 1) * 0.5, (t.s - 1) * 0.25);
       t.g.scale.setScalar(t.s);
     }
   }
@@ -672,7 +738,9 @@ export async function avviaScena({ canvas, base, testi, progresso, vaiA, lati, e
     progressoAttuale = progresso();
 
     // dove sta la telecamera
-    statoDaProgresso(progressoAttuale);
+    const s = salto?.();
+    const buio = s ? statoDaSalto(s) : (statoDaProgresso(progressoAttuale), 0);
+    sipario.style.opacity = buio.toFixed(3);
     if (!trascina) { const r = Math.exp(-dt * 1.6); yaw *= r; pitch *= r; }
     const mx = tattile || ndc.x > 2 ? 0 : ndc.x, my = tattile || ndc.x > 2 ? 0 : ndc.y;
     const kp = 1 - Math.exp(-dt * 2.5);
@@ -683,22 +751,33 @@ export async function avviaScena({ canvas, base, testi, progresso, vaiA, lati, e
     destra.crossVectors(vec, SU).normalize();
     vec.applyAxisAngle(destra, pitch + parY * 0.05);
     fuori.pos.copy(fuori.target).add(vec);
+    // la telecamera segue con un po' di morbidezza: niente scatti con la rotellina
+    if (primo) { liscio.pos.copy(fuori.pos); liscio.target.copy(fuori.target); liscio.ox = fuori.ox; liscio.oy = fuori.oy; }
+    const kl = 1 - Math.exp(-dt * (s ? 14 : 5));
+    liscio.pos.lerp(fuori.pos, kl);
+    liscio.target.lerp(fuori.target, kl);
+    liscio.ox += (fuori.ox - liscio.ox) * kl;
+    liscio.oy += (fuori.oy - liscio.oy) * kl;
+    liscio.roll += (fuori.roll - liscio.roll) * kl;
 
     // da vicino su un'immagine
     if (inFuoco && Math.abs(scrollY - yFuoco) > 60) esciFuoco();
     kFuoco += ((inFuoco ? 1 : 0) - kFuoco) * (1 - Math.exp(-dt * 4));
     const kf = morbido(clamp01(kFuoco));
-    camera.position.lerpVectors(fuori.pos, F.pos, kf);
-    vec.lerpVectors(fuori.target, F.target, kf);
+    camera.position.lerpVectors(liscio.pos, F.pos, kf);
+    vec.lerpVectors(liscio.target, F.target, kf);
     camera.up.copy(SU);
     camera.lookAt(vec);
     // la nebbia comincia subito dopo ciò che si sta guardando: quello è nitido, il resto sfuma nel buio
     const vista = camera.position.distanceTo(vec);
     scena.fog.near = vista + 4;
     scena.fog.far = vista + 32;
-    camera.rotateZ(fuori.roll * (1 - kf));
+    matGriglia.uniforms.occhio.value.copy(camera.position);
+    matGriglia.uniforms.vicino.value = vista + 2;
+    matGriglia.uniforms.lontano.value = vista + 26;
+    camera.rotateZ(liscio.roll * (1 - kf));
     const W = canvas.clientWidth, H = canvas.clientHeight;
-    camera.setViewOffset(W, H, -fuori.ox * (1 - kf) * W / 2, fuori.oy * (1 - kf) * H / 2, W, H);
+    camera.setViewOffset(W, H, -liscio.ox * (1 - kf) * W / 2, liscio.oy * (1 - kf) * H / 2, W, H);
 
     // cosa c'è sotto il mouse
     if (mosso && !tattile) {

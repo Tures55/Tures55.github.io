@@ -213,3 +213,7 @@ main { position: relative; z-index: 2; }
 @media (max-height: 760px) and (min-width: 861px) and (min-aspect-ratio: 1/1) { .js3d .eroe .suggerimento { display: none; } }
 @media (hover: none) { .dock-nav a::before { display: none; } .per-mouse { display: none; } .per-tocco { display: inline; } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* ---------- Salti dalla dock in basso: le tappe intermedie sfumano ---------- */
+.sipario { position: fixed; inset: 0; z-index: 1; pointer-events: none; background: var(--fondo); opacity: 0; }
+.in-salto .tappa:not(.meta-salto) .testo { opacity: 0 !important; transition: opacity .2s ease; }

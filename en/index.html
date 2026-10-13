@@ -24,7 +24,11 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="../assets/css/sito.css">
+<script>
+  // decide subito se mostrare il 3D, prima che la pagina appaia: niente lampo della versione semplice all'apertura
+  (function () { try { if (!matchMedia('(prefers-reduced-motion: reduce)').matches && document.createElement('canvas').getContext('webgl2')) document.documentElement.className = 'js3d'; } catch (e) {} })();
+</script>
+<link rel="stylesheet" href="../assets/css/sito.css?v=mv77v5ip">
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" crossorigin>
 <script type="importmap">
 { "imports": {
@@ -197,6 +201,6 @@
 </div>
 
 <script id="testi-js" type="application/json">{"chiudi":"Close","fuoco_aiuto":"Click or Esc to go back","attesa":"Loading","mattonelle":{"start":"Start","cartelle":"Folders","vassoio":"System tray","browser":"Browser","posta":"Mail","musica":"Music","foto":"Photos","codice":"Code","terminale":"Terminal","chat":"Chat","orologio":"Clock and date","calendario":"Calendar","meteo":"Weather","volume":"Volume","cpu":"CPU","ram":"RAM","timer":"Timer","note":"Quick notes","pannello":"Control Panel"},"giorni":["SUN","MON","TUE","WED","THU","FRI","SAT"],"mesi":["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"]}</script>
-<script type="module" src="../assets/js/sito.js"></script>
+<script type="module" src="../assets/js/sito.js?v=mv77v5ip"></script>
 </body>
 </html>
