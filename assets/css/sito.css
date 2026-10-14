@@ -288,3 +288,9 @@ main { position: relative; z-index: 2; }
 [data-guida] svg { fill: currentColor; stroke: none; }
 button.pulsante { border: 0; font: inherit; font-weight: 650; font-size: 17px; cursor: pointer; }
 @media (max-width: 760px) { .guida-testa strong { flex: 1; } .guida-lingue { order: 3; flex-basis: 100%; } .guida-lingue button { padding: 5px 9px; font-size: 13px; } }
+
+/* ---------- Stella su GitHub ---------- */
+.pulsante.stella { color: #ffc94d; background: transparent; box-shadow: 0 0 0 1px rgba(255,201,77,.6) inset; }
+.pulsante.stella:hover { background: rgba(255,201,77,.12); box-shadow: 0 0 0 1px #ffc94d inset, 0 12px 40px -12px rgba(255,201,77,.45); }
+.pulsante.stella svg { fill: currentColor; stroke: none; width: 18px; height: 18px; }
+.piede .piede-stella { color: #ffc94d; }
