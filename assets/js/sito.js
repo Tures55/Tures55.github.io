@@ -137,7 +137,7 @@ aggiorna();
 })();
 
 // ---------- Guida video: si apre nella lingua di chi guarda (pagina italiana = italiano) ----------
-const GUIDA = { it: 'Italiano', en: 'English', es: 'Español', fr: 'Français', de: 'Deutsch', pt: 'Português', zh: '中文', ja: '日本語', ru: 'Русский', ko: '한국어' };
+const GUIDA = { it: 'Italiano', en: 'English', es: 'Español', fr: 'Français', de: 'Deutsch', pt: 'Português', zh: '中文', ja: '日本語', ru: 'Русский', ko: '한국어', fa: 'فارسی' };
 const guida = document.getElementById('guida');
 if (guida) {
   const video = guida.querySelector('video');
