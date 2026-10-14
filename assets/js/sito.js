@@ -136,6 +136,42 @@ aggiorna();
   } catch {}
 })();
 
+// ---------- Guida video: si apre nella lingua di chi guarda (pagina italiana = italiano) ----------
+const GUIDA = { it: 'Italiano', en: 'English', es: 'Español', fr: 'Français', de: 'Deutsch', pt: 'Português', zh: '中文', ja: '日本語', ru: 'Русский', ko: '한국어' };
+const guida = document.getElementById('guida');
+if (guida) {
+  const video = guida.querySelector('video');
+  const lingue = guida.querySelector('.guida-lingue');
+  const scelta = () => {
+    try { const s = localStorage.getItem('t55-guida'); if (GUIDA[s]) return s; } catch {}
+    if (radice.lang === 'it') return 'it';
+    for (const l of navigator.languages || [navigator.language]) {
+      const c = String(l).slice(0, 2).toLowerCase();
+      if (GUIDA[c]) return c;
+    }
+    return 'en';
+  };
+  const metti = (l, avvia) => {
+    video.src = `${base}assets/video/guida/${l}.mp4`;
+    lingue.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.l === l)));
+    if (avvia) video.play().catch(() => {});
+  };
+  for (const [l, nome] of Object.entries(GUIDA)) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.dataset.l = l; b.lang = l; b.textContent = nome;
+    b.addEventListener('click', () => { try { localStorage.setItem('t55-guida', l); } catch {} metti(l, true); });
+    lingue.append(b);
+  }
+  // #guida = lingua scelta da sola, #guida-en / #guida-it ... = quella lingua
+  const dalLink = () => location.hash.match(/^#guida-([a-z]{2})$/)?.[1];
+  const apri = () => { if (!guida.open) { guida.showModal(); metti(GUIDA[dalLink()] ? dalLink() : scelta(), true); } };
+  document.querySelectorAll('[data-guida]').forEach((b) => b.addEventListener('click', apri));
+  guida.querySelector('.guida-chiudi').addEventListener('click', () => guida.close());
+  guida.addEventListener('click', (e) => { if (e.target === guida) guida.close(); });
+  guida.addEventListener('close', () => { video.pause(); if (location.hash.startsWith('#guida')) history.replaceState(null, '', location.pathname); });
+  if (location.hash === '#guida' || dalLink()) apri();
+}
+
 // ---------- Scena 3D (se il computer la regge) ----------
 function puo3D() {
   if (movimentoRidotto) return false;

@@ -28,7 +28,7 @@
   // decide subito se mostrare il 3D, prima che la pagina appaia: niente lampo della versione semplice all'apertura
   (function () { try { if (!matchMedia('(prefers-reduced-motion: reduce)').matches && document.createElement('canvas').getContext('webgl2')) document.documentElement.className = 'js3d'; } catch (e) {} })();
 </script>
-<link rel="stylesheet" href="assets/css/sito.css?v=mv78bhr2">
+<link rel="stylesheet" href="assets/css/sito.css?v=mv7wikg3">
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" crossorigin>
 <script type="importmap">
 { "imports": {
@@ -95,6 +95,10 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 8 3.4 4.5 6.9 4.5c2.1 0 3.6 1.2 5.1 3 1.5-1.8 3-3 5.1-3 3.5 0 5.5 3.5 4.2 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg>
           Sostieni
         </a>
+        <button type="button" class="pulsante secondario" data-guida>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+          Guarda la guida · 3 min
+        </button>
       </div>
       <p class="meta">Versione <span data-versione>2.0.4</span> · <span data-peso>112</span> MB · senza permessi di amministratore</p>
     </div>
@@ -218,6 +222,15 @@
   <a href="https://buymeacoffee.com/tures1955" rel="noopener" target="_blank" data-nome="Sostieni" class="nav-cuore"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 8 3.4 4.5 6.9 4.5c2.1 0 3.6 1.2 5.1 3 1.5-1.8 3-3 5.1-3 3.5 0 5.5 3.5 4.2 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg><span class="sr">Sostieni</span></a>
 </nav>
 
+<dialog id="guida" class="guida" aria-label="Guida rapida">
+  <div class="guida-testa">
+    <strong>Guida rapida</strong>
+    <div class="guida-lingue" role="group" aria-label="Lingua"></div>
+    <button type="button" class="guida-chiudi" aria-label="Chiudi">×</button>
+  </div>
+  <video controls playsinline preload="none" poster="assets/video/guida_it.jpg" width="1920" height="1080"></video>
+</dialog>
+
 <div id="etichetta" class="etichetta" hidden></div>
 <div id="fuoco" class="fuoco" hidden>
   <button type="button" class="fuoco-chiudi" aria-label="Chiudi">×</button>
@@ -225,6 +238,6 @@
 </div>
 
 <script id="testi-js" type="application/json">{"chiudi":"Chiudi","fuoco_aiuto":"Clic o Esc per tornare","attesa":"Caricamento","mattonelle":{"start":"Start","cartelle":"Cartelle","vassoio":"Vassoio","browser":"Browser","posta":"Posta","musica":"Musica","foto":"Foto","codice":"Codice","terminale":"Terminale","chat":"Chat","orologio":"Orologio e data","calendario":"Calendario","meteo":"Meteo","volume":"Volume","cpu":"Processore","ram":"Memoria RAM","timer":"Timer","note":"Note al volo","pannello":"Pannello di controllo"},"giorni":["DOM","LUN","MAR","MER","GIO","VEN","SAB"],"mesi":["GEN","FEB","MAR","APR","MAG","GIU","LUG","AGO","SET","OTT","NOV","DIC"]}</script>
-<script type="module" src="assets/js/sito.js?v=mv78bhr2"></script>
+<script type="module" src="assets/js/sito.js?v=mv7wikg3"></script>
 </body>
 </html>
