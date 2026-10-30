@@ -124,7 +124,7 @@ aggiorna();
     let dati = null;
     try { dati = JSON.parse(sessionStorage.getItem('t55-rilascio') || 'null'); } catch {}
     if (!dati) {
-      const r = await fetch('https://api.github.com/repos/Tures55/tures55-dock/releases/latest', { headers: { Accept: 'application/vnd.github+json' } });
+      const r = await fetch('https://api.github.com/repos/Tures55/open-taskbar-dock-windows/releases/latest', { headers: { Accept: 'application/vnd.github+json' } });
       if (!r.ok) return;
       const j = await r.json();
       const file = (j.assets || []).find((a) => a.name === 'Tures55-Dock-Setup.exe');
