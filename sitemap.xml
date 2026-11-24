@@ -10,4 +10,14 @@
     <xhtml:link rel="alternate" hreflang="it" href="https://tures55.github.io/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://tures55.github.io/en/"/>
   </url>
+  <url>
+    <loc>https://tures55.github.io/translator/</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://tures55.github.io/translator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tures55.github.io/translator/en/"/>
+  </url>
+  <url>
+    <loc>https://tures55.github.io/translator/en/</loc>
+    <xhtml:link rel="alternate" hreflang="it" href="https://tures55.github.io/translator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tures55.github.io/translator/en/"/>
+  </url>
 </urlset>
