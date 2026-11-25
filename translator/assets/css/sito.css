@@ -294,3 +294,17 @@ button.pulsante { border: 0; font: inherit; font-weight: 650; font-size: 17px; c
 .pulsante.stella:hover { background: rgba(255,201,77,.12); box-shadow: 0 0 0 1px #ffc94d inset, 0 12px 40px -12px rgba(255,201,77,.45); }
 .pulsante.stella svg { fill: currentColor; stroke: none; width: 18px; height: 18px; }
 .piede .piede-stella { color: #ffc94d; }
+
+/* video guida (si carica da YouTube solo al clic) */
+.video { grid-template-columns: minmax(0, 1fr); padding-bottom: 40px; }
+.video .colonna { width: 100%; max-width: 60rem; margin: 0 auto; }
+.video .video-testo { color: var(--tenue); font-size: 18px; margin-bottom: 26px; }
+.video-cornice { position: relative; aspect-ratio: 16 / 9; border-radius: var(--raggio); overflow: hidden; border: 1px solid var(--linea); background: #000; }
+.video-cornice iframe, .video-avvia { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video-avvia { padding: 0; cursor: pointer; background: #000; }
+.video-avvia img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity .2s; }
+.video-avvia:hover img, .video-avvia:focus-visible img { opacity: .8; }
+.video-play { position: absolute; left: 50%; top: 84%; width: 92px; height: 92px; margin: -46px 0 0 -46px; border-radius: 50%; background: var(--accento); display: grid; place-items: center; box-shadow: 0 8px 30px rgba(0,0,0,.5); }
+.video-play svg { width: 44px; height: 44px; fill: #07080a; margin-left: 5px; }
+.video-avvia:focus-visible { outline: 3px solid var(--accento); outline-offset: 3px; }
+.video-sotto { display: flex; flex-wrap: wrap; gap: 10px 26px; align-items: baseline; margin-top: 18px; color: var(--fioco); font-size: 15px; }
